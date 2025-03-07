@@ -15,37 +15,31 @@
  */
 async function generatePDF(planData) {
     try {
-        // Check if jsPDF is available
-        if (typeof jspdf === 'undefined') {
-            // If in development mode and jsPDF is not available, load it dynamically
-            await loadJsPDF();
-        }
+        // Create a temporary HTML element
+        const container = document.createElement('div');
+        container.style.width = '210mm';
+        container.style.padding = '15mm';
+        container.style.visibility = 'hidden';
+        container.style.position = 'absolute';
+        container.style.left = '-9999px';
+        document.body.appendChild(container);
         
-        // Initialize PDF document
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF({
-            orientation: 'portrait',
-            unit: 'mm',
-            format: 'a4',
-            putOnlyUsedFonts: true,
-            compress: true
-        });
+        // Add simple English text, then we will add Arabic
+        container.innerHTML = createHTMLContent(planData);
         
-        // Add support for Arabic (needs arabic font like Tajawal)
-        doc.addFont('fonts/tajawal/Tajawal-Regular.ttf', 'Tajawal', 'normal');
-        doc.addFont('fonts/tajawal/Tajawal-Bold.ttf', 'Tajawal', 'bold');
+        // Convert HTML to PDF using html2pdf
+        const options = {
+            margin: 10,
+            filename: `fitness-plan-${new Date().toISOString().slice(0, 10)}.pdf`,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
         
-        // Set default font
-        doc.setFont('Tajawal');
+        await html2pdf().from(container).set(options).save();
         
-        // Add RTL support
-        doc.setR2L(true);
-        
-        // Create PDF content
-        createPDFContent(doc, planData);
-        
-        // Save the PDF
-        doc.save(`خطة-اللياقة-والتغذية-${new Date().toLocaleDateString('ar-SA').replace(/\//g, '-')}.pdf`);
+        // Remove the temporary element
+        document.body.removeChild(container);
         
         return true;
     } catch (error) {
@@ -53,6 +47,62 @@ async function generatePDF(planData) {
         window.app.showNotification('حدث خطأ أثناء إنشاء ملف PDF', 'error');
         throw error;
     }
+}
+
+// Function to create HTML content for conversion to PDF
+function createHTMLContent(planData) {
+    return `
+        <div style="font-family: Arial, sans-serif; color: #333;">
+            <h1 style="color: #0d9488; text-align: center;">Fitness & Nutrition Plan</h1>
+            
+            <p>Date: ${new Date().toISOString().slice(0, 10)}</p>
+            
+            <div style="margin: 20px 0;">
+                <h2 style="color: #0d9488; border-bottom: 1px solid #eee; padding-bottom: 5px;">User Information</h2>
+                <p>Age: ${planData.user.age}</p>
+                <p>Weight: ${planData.user.weight} kg</p>
+                <p>Height: ${planData.user.height} cm</p>
+                <p>BMI: ${planData.user.bmi}</p>
+                <p>Target Calories: ${planData.user.targetCalories} cal/day</p>
+            </div>
+            
+            <div style="margin: 20px 0;">
+                <h2 style="color: #0d9488; border-bottom: 1px solid #eee; padding-bottom: 5px;">Workout Plan</h2>
+                ${planData.workoutPlan.days.map(day => `
+                    <div style="margin: 10px 0;">
+                        <h3>${day.day} - ${day.focus}</h3>
+                        <ul style="list-style-type: none; padding-left: 20px;">
+                            ${day.exercises.map(exercise => {
+                                let details = '';
+                                if (exercise.sets && exercise.reps) {
+                                    details = ` (${exercise.sets} sets x ${exercise.reps} reps)`;
+                                } else if (exercise.duration) {
+                                    details = ` (${exercise.duration})`;
+                                }
+                                return `<li>- ${exercise.name}${details}</li>`;
+                            }).join('')}
+                        </ul>
+                    </div>
+                `).join('')}
+            </div>
+            
+            <div style="margin: 20px 0;">
+                <h2 style="color: #0d9488; border-bottom: 1px solid #eee; padding-bottom: 5px;">Diet Plan</h2>
+                ${planData.dietPlan.meals.map(meal => `
+                    <div style="margin: 10px 0;">
+                        <h3>${meal.name}</h3>
+                        <ul style="list-style-type: none; padding-left: 20px;">
+                            ${meal.suggestions.map(item => `<li>- ${item}</li>`).join('')}
+                        </ul>
+                    </div>
+                `).join('')}
+            </div>
+            
+            <div style="margin-top: 30px; font-size: 12px; color: #666; text-align: center;">
+                <p>This plan is provided as a general guideline only. Please consult a healthcare professional before starting any new exercise or diet regimen.</p>
+            </div>
+        </div>
+    `;
 }
 
 /**
@@ -428,4 +478,95 @@ function addFooter(doc, text) {
         // Page number
         doc.text(`صفحة ${i} من ${pageCount}`, 105, 292, { align: 'center' });
     }
+}
+
+// دالة جديدة لإنشاء محتوى PDF بسيط بدون الاعتماد على الخطوط العربية
+function createSimplePDFContent(doc, planData) {
+    // إعداد المستند
+    const margin = 15;
+    const pageWidth = 210; // A4 width in mm
+    let y = margin;
+    
+    // إضافة العنوان 
+    doc.setFontSize(18);
+    doc.setTextColor(13, 148, 136); // Teal color
+    doc.text("Fitness & Nutrition Plan", pageWidth / 2, y, { align: "center" });
+    y += 10;
+    
+    // إضافة التاريخ
+    doc.setFontSize(10);
+    doc.setTextColor(100, 100, 100);
+    const date = new Date().toISOString().slice(0, 10);
+    doc.text(`Date: ${date}`, margin, y);
+    y += 10;
+    
+    // إضافة معلومات المستخدم
+    doc.setFontSize(12);
+    doc.setTextColor(0, 0, 0);
+    doc.text(`Age: ${planData.user.age}`, margin, y); y += 7;
+    doc.text(`Weight: ${planData.user.weight} kg`, margin, y); y += 7;
+    doc.text(`Height: ${planData.user.height} cm`, margin, y); y += 7;
+    doc.text(`BMI: ${planData.user.bmi}`, margin, y); y += 7;
+    doc.text(`Target Calories: ${planData.user.targetCalories} cal/day`, margin, y); y += 15;
+    
+    // إضافة عنوان خطة التمارين
+    doc.setFontSize(14);
+    doc.setTextColor(13, 148, 136);
+    doc.text("Workout Plan", margin, y); y += 10;
+    
+    // إضافة خطة التمارين
+    doc.setFontSize(12);
+    doc.setTextColor(0, 0, 0);
+    if (planData.workoutPlan && planData.workoutPlan.days) {
+        for (const day of planData.workoutPlan.days) {
+            doc.setFontSize(12);
+            doc.setTextColor(0, 0, 0);
+            doc.text(`${day.day} - ${day.focus}`, margin, y); y += 7;
+            
+            doc.setFontSize(10);
+            for (const exercise of day.exercises) {
+                let text = `- ${exercise.name}`;
+                if (exercise.sets && exercise.reps) {
+                    text += ` (${exercise.sets} sets x ${exercise.reps} reps)`;
+                } else if (exercise.duration) {
+                    text += ` (${exercise.duration})`;
+                }
+                
+                doc.text(text, margin + 5, y);
+                y += 5;
+            }
+            y += 5;
+        }
+    }
+    
+    // إضافة عنوان النظام الغذائي
+    doc.setFontSize(14);
+    doc.setTextColor(13, 148, 136);
+    y += 5;
+    doc.text("Diet Plan", margin, y); y += 10;
+    
+    // إضافة النظام الغذائي
+    doc.setFontSize(12);
+    doc.setTextColor(0, 0, 0);
+    if (planData.dietPlan && planData.dietPlan.meals) {
+        for (const meal of planData.dietPlan.meals) {
+            doc.setFontSize(12);
+            doc.text(meal.name, margin, y); y += 7;
+            
+            doc.setFontSize(10);
+            for (const suggestion of meal.suggestions) {
+                doc.text(`- ${suggestion}`, margin + 5, y);
+                y += 5;
+            }
+            y += 3;
+        }
+    }
+    
+    // إضافة ملاحظة في النهاية
+    y += 10;
+    doc.setFontSize(8);
+    doc.setTextColor(100, 100, 100);
+    doc.text("This plan is provided as a general guideline only. Please consult a healthcare professional", margin, y);
+    y += 5;
+    doc.text("before starting any new exercise or diet regimen.", margin, y);
 }

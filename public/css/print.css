@@ -1,0 +1,215 @@
+/* print.css - أنماط خاصة بالطباعة وتصدير PDF */
+
+@page {
+    size: A4;
+    margin: 15mm;
+  }
+  
+  @media print {
+    /* إعدادات عامة للطباعة */
+    body {
+      font-family: 'Tajawal', sans-serif;
+      direction: rtl;
+      color: #333;
+      line-height: 1.5;
+      font-size: 12pt;
+      background: none;
+    }
+  
+    /* إخفاء العناصر غير المطلوبة في الطباعة */
+    header, nav, footer, button, .no-print {
+      display: none !important;
+    }
+  
+    /* التأكد من عدم قطع العناصر */
+    h1, h2, h3, h4, p, ul, ol, img, .page-break-avoid {
+      page-break-inside: avoid;
+    }
+  
+    /* بداية صفحات جديدة */
+    .page-break-before {
+      page-break-before: always;
+    }
+  
+    /* نهاية صفحات */
+    .page-break-after {
+      page-break-after: always;
+    }
+  
+    /* العناوين الرئيسية */
+    h1 {
+      font-size: 24pt;
+      color: #0d9488;
+      text-align: center;
+      margin-bottom: 10mm;
+    }
+  
+    h2 {
+      font-size: 18pt;
+      color: #0d9488;
+      border-bottom: 1pt solid #eee;
+      padding-bottom: 3mm;
+      margin-top: 10mm;
+      margin-bottom: 5mm;
+    }
+  
+    h3 {
+      font-size: 14pt;
+      margin-top: 5mm;
+      margin-bottom: 3mm;
+    }
+  
+    /* جداول */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 5mm 0;
+    }
+  
+    th, td {
+      border: 0.5pt solid #ddd;
+      padding: 2mm 3mm;
+      text-align: right;
+    }
+  
+    th {
+      background-color: #f6f6f6;
+      font-weight: bold;
+    }
+  
+    /* قوائم */
+    ul, ol {
+      padding-right: 5mm;
+      margin: 3mm 0;
+    }
+  
+    ul li, ol li {
+      margin-bottom: 2mm;
+    }
+  
+    /* فواصل بين الأقسام */
+    .section {
+      margin-bottom: 10mm;
+    }
+  
+    /* تذييل الصفحة */
+    .footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      font-size: 9pt;
+      color: #666;
+      padding: 5mm 0;
+    }
+  
+    /* رقم الصفحة */
+    .page-number:after {
+      content: counter(page);
+    }
+  
+    /* أنماط خاصة بملخص البيانات */
+    .user-info {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5mm;
+      margin-bottom: 8mm;
+    }
+  
+    .user-info p {
+      margin: 2mm 0;
+    }
+  
+    /* مربعات الخطط */
+    .plan-box {
+      border: 1pt solid #eee;
+      border-radius: 2mm;
+      padding: 5mm;
+      margin-bottom: 5mm;
+    }
+  
+    /* الألوان المستخدمة للمخططات */
+    .weight-loss {
+      border-right: 4pt solid #e53e3e;
+    }
+  
+    .muscle-gain {
+      border-right: 4pt solid #3182ce;
+    }
+  
+    .fitness {
+      border-right: 4pt solid #38a169;
+    }
+  
+    /* أنماط خاصة بتمارين التمارين */
+    .exercise-item {
+      margin-bottom: 3mm;
+      padding-right: 5mm;
+      position: relative;
+    }
+  
+    .exercise-item:before {
+      content: "•";
+      position: absolute;
+      right: 0;
+    }
+  
+    /* أنماط خاصة بالوجبات الغذائية */
+    .meal-box {
+      background-color: #f9f9f9;
+      border-radius: 2mm;
+      padding: 4mm;
+      margin-bottom: 4mm;
+    }
+  
+    /* ملاحظات وتنبيهات */
+    .note {
+      font-style: italic;
+      color: #666;
+      font-size: 10pt;
+      padding: 2mm 0;
+    }
+  
+    .alert {
+      font-weight: bold;
+      color: #e53e3e;
+    }
+  
+    /* ملخص المعلومات والتوصيات */
+    .summary-box {
+      background-color: #f0fdfa;
+      border: 1pt solid #0d9488;
+      border-radius: 2mm;
+      padding: 5mm;
+      margin: 5mm 0;
+    }
+  
+    /* عنوان الصفحة */
+    .header-logo {
+      text-align: center;
+      margin-bottom: 10mm;
+    }
+  
+    /* مؤشر BMI ألوان */
+    .bmi-underweight {
+      color: #dd6b20; /* برتقالي */
+    }
+    
+    .bmi-normal {
+      color: #38a169; /* أخضر */
+    }
+    
+    .bmi-overweight {
+      color: #dd6b20; /* برتقالي */
+    }
+    
+    .bmi-obese {
+      color: #e53e3e; /* أحمر */
+    }
+  
+    /* الصور */
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
