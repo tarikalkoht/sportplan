@@ -548,3 +548,35 @@ const dietTemplates = {
         }
     }
 };
+
+/**
+ * Get a diet plan based on user goals and preferences
+ * @param {string} goal - User fitness goal
+ * @param {string} dietType - Diet type preference
+ * @param {number} targetCalories - Target calories per day
+ * @returns {Object} The appropriate diet plan
+ */
+function getDietPlan(goal, dietType, targetCalories) {
+    // Default to standard diet if type is invalid
+    const dietKey = ['standard', 'high_protein', 'vegetarian'].includes(dietType) ? dietType : 'standard';
+    
+    // Default to fitness if goal is invalid
+    const goalKey = ['weight_loss', 'muscle_gain', 'fitness'].includes(goal) ? goal : 'fitness';
+    
+    // Get the diet template
+    const template = dietTemplates[dietKey];
+    const goalPlan = template.goals[goalKey];
+    
+    // Create a customized plan
+    return {
+        title: template.title,
+        description: template.description,
+        macros: goalPlan.macros,
+        meals: goalPlan.meals,
+        tips: goalPlan.tips
+    };
+}
+
+module.exports = {
+    getDietPlan
+};

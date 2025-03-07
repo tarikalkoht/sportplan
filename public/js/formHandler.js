@@ -228,104 +228,66 @@ async function mockBackendResponse(userData) {
     // Simulate network delay
     await new Promise(resolve => setTimeout(resolve, 1500));
     
-    // Template workout and diet plans based on user goals
-    const workoutPlans = {
-        weight_loss: {
-            title: 'خطة تمارين لفقدان الوزن',
-            description: 'تركز هذه الخطة على حرق الدهون وزيادة التمثيل الغذائي',
-            days: [
-                {
-                    day: 'اليوم الأول',
-                    focus: 'تمارين القلب والأوعية الدموية',
-                    exercises: [
-                        { name: 'مشي سريع أو جري', duration: '30 دقيقة', intensity: 'متوسطة إلى عالية' },
-                        { name: 'تمارين القرفصاء', sets: '3', reps: '15' },
-                        { name: 'تمارين الضغط', sets: '3', reps: '10-15' },
-                        { name: 'تمارين البطن', sets: '3', reps: '20' }
-                    ]
-                },
-                {
-                    day: 'اليوم الثاني',
-                    focus: 'تدريب القوة للجزء العلوي',
-                    exercises: [
-                        { name: 'تمارين الضغط', sets: '3', reps: '12-15' },
-                        { name: 'تمارين الذراعين بالدمبل', sets: '3', reps: '12' },
-                        { name: 'تمارين الظهر', sets: '3', reps: '12' },
-                        { name: 'تمارين فتح الصدر', sets: '3', reps: '15' }
-                    ]
-                },
-                {
-                    day: 'اليوم الثالث',
-                    focus: 'تدريب القوة للجزء السفلي',
-                    exercises: [
-                        { name: 'تمارين القرفصاء', sets: '4', reps: '15' },
-                        { name: 'تمارين الدفع الأمامي', sets: '3', reps: '12' },
-                        { name: 'تمارين الساق الخلفية', sets: '3', reps: '15' },
-                        { name: 'تمارين الكاحل', sets: '3', reps: '20' }
-                    ]
-                }
-            ]
-        },
-        muscle_gain: {
-            title: 'خطة تمارين لبناء العضلات',
-            description: 'تركز هذه الخطة على زيادة القوة وحجم العضلات',
-            days: [
-                {
-                    day: 'اليوم الأول',
-                    focus: 'تمارين الصدر والذراعين',
-                    exercises: [
-                        { name: 'بنش برس', sets: '4', reps: '8-10' },
-                        { name: 'ضغط دمبل مائل', sets: '3', reps: '10' },
-                        { name: 'كيبل فلاي', sets: '3', reps: '12' },
-                        { name: 'كيرل البايسبس', sets: '4', reps: '10' }
-                    ]
-                },
-                {
-                    day: 'اليوم الثاني',
-                    focus: 'تمارين الظهر والكتفين',
-                    exercises: [
-                        { name: 'سحب علوي', sets: '4', reps: '8-10' },
-                        { name: 'صف الدمبل', sets: '3', reps: '10' },
-                        { name: 'رفع جانبي', sets: '3', reps: '12' },
-                        { name: 'شراق', sets: '3', reps: '10' }
-                    ]
-                },
-                {
-                    day: 'اليوم الثالث',
-                    focus: 'تمارين الأرجل',
-                    exercises: [
-                        { name: 'سكوات بالبار', sets: '5', reps: '8' },
-                        { name: 'ديدليفت', sets: '4', reps: '8' },
-                        { name: 'ليج برس', sets: '3', reps: '10' },
-                        { name: 'كف ماشين', sets: '3', reps: '12' }
-                    ]
-                },
-                {
-                    day: 'اليوم الرابع',
-                    focus: 'تمارين الكتفين والذراعين',
-                    exercises: [
-                        { name: 'ضغط عسكري', sets: '4', reps: '8-10' },
-                        { name: 'رفع جانبي', sets: '3', reps: '12' },
-                        { name: 'شراق', sets: '3', reps: '10' },
-                        { name: 'كيرل البايسبس', sets: '4', reps: '10' }
-                    ]
-                }
-            ]
-        }
+    // Get appropriate workouts from templates
+    const goal = userData.goal || 'fitness';
+    const frequency = parseInt(userData.frequency) || 3;
+    
+    // Simplified workout plan for demo
+    const workoutPlan = {
+        title: goal === 'weight_loss' ? 'خطة تمارين لفقدان الوزن' : 
+               goal === 'muscle_gain' ? 'خطة تمارين لبناء العضلات' : 'خطة تمارين لتحسين اللياقة',
+        description: 'خطة تمارين مخصصة حسب هدفك',
+        days: [
+            {
+                day: 'اليوم الأول',
+                focus: 'تمارين متكاملة',
+                exercises: [
+                    { name: 'إحماء', duration: '5 دقائق', intensity: 'منخفضة' },
+                    { name: 'تمارين القرفصاء', sets: '3', reps: '15' },
+                    { name: 'تمارين الضغط', sets: '3', reps: '10-15' },
+                    { name: 'تمارين البطن', sets: '3', reps: '20' }
+                ]
+            },
+            // المزيد من الأيام حسب الحاجة
+        ]
     };
     
-    // Return the appropriate plan based on user goal
+    // Simplified diet plan
+    const dietPlan = {
+        title: 'نظام غذائي متوازن',
+        description: 'نظام غذائي مخصص لدعم أهدافك',
+        meals: [
+            { 
+                name: 'وجبة الإفطار', 
+                suggestions: ['بيض مسلوق', 'خبز أسمر', 'خضروات'] 
+            },
+            { 
+                name: 'وجبة الغداء', 
+                suggestions: ['صدر دجاج مشوي', 'أرز بني', 'سلطة'] 
+            },
+            { 
+                name: 'وجبة العشاء', 
+                suggestions: ['سمك مشوي', 'بطاطا حلوة', 'خضروات'] 
+            },
+            { 
+                name: 'وجبة خفيفة', 
+                suggestions: ['مكسرات', 'فاكهة'] 
+            }
+        ]
+    };
+    
+    // Return structured plan data
     return {
-        workoutPlan: workoutPlans[userData.goal] || workoutPlans.fitness,
-        dietPlan: {
-            title: 'نظام غذائي',
-            description: 'نظام غذائي متوازن لدعم أهدافك الصحية',
-            meals: [
-                { name: 'وجبة الإفطار', items: ['بيض مسلوق', 'خبز أسمر', 'خضروات'] },
-                { name: 'وجبة الغداء', items: ['صدر دجاج مشوي', 'أرز بني', 'سلطة'] },
-                { name: 'وجبة العشاء', items: ['سمك مشوي', 'بطاطا حلوة', 'خضروات'] },
-                { name: 'وجبة خفيفة', items: ['مكسرات', 'فاكهة'] }
-            ]
-        }
+        user: {
+            age: userData.age,
+            weight: userData.weight,
+            height: userData.height,
+            bmi: userData.bmi,
+            targetCalories: userData.targetCalories
+        },
+        goal: userData.goal,
+        workoutPlan: workoutPlan,
+        dietPlan: dietPlan,
+        date: new Date().toISOString()
     };
 }
