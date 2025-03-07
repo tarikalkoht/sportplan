@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خطة اللياقة والتغذية الشخصية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen font-tajawal">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <div class="inline-block mb-4 transform hover:scale-105 transition-transform duration-300">
+                <img src="images/logo.svg" alt="شعار خطة اللياقة والتغذية" class="h-16">
+            </div>
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">خطة اللياقة والتغذية الشخصية</h1>
+            <p class="text-gray-600 text-lg max-w-2xl mx-auto">أدخل بياناتك الشخصية للحصول على خطة تمارين ونظام غذائي مخصص يناسب احتياجاتك وأهدافك</p>
+        </header>
+
+        <!-- Form Section -->
+        <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 mb-12 transform hover:shadow-xl transition-all duration-300">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">المعلومات الشخصية</h2>
+            
+            <form id="fitnessForm" class="space-y-6">
+                <div class="grid md:grid-cols-3 gap-6">
+                    <!-- Age Input -->
+                    <div class="form-group">
+                        <label for="age" class="block text-gray-700 font-medium mb-2">العمر</label>
+                        <input type="number" id="age" name="age" min="15" max="80" required 
+                            class="form-input w-full rounded-lg border-gray-300 focus:border-teal-500 focus:ring focus:ring-teal-200 focus:ring-opacity-50 transition-all duration-300">
+                    </div>
+                    
+                    <!-- Weight Input -->
+                    <div class="form-group">
+                        <label for="weight" class="block text-gray-700 font-medium mb-2">الوزن (كجم)</label>
+                        <input type="number" id="weight" name="weight" min="30" max="200" required
+                            class="form-input w-full rounded-lg border-gray-300 focus:border-teal-500 focus:ring focus:ring-teal-200 focus:ring-opacity-50 transition-all duration-300">
+                    </div>
+                    
+                    <!-- Height Input -->
+                    <div class="form-group">
+                        <label for="height" class="block text-gray-700 font-medium mb-2">الطول (سم)</label>
+                        <input type="number" id="height" name="height" min="120" max="220" required
+                            class="form-input w-full rounded-lg border-gray-300 focus:border-teal-500 focus:ring focus:ring-teal-200 focus:ring-opacity-50 transition-all duration-300">
+                    </div>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-6">
+                    <!-- Goal Selection -->
+                    <div class="form-group">
+                        <label for="goal" class="block text-gray-700 font-medium mb-2">الهدف</label>
+                        <select id="goal" name="goal" required
+                            class="form-select w-full rounded-lg border-gray-300 focus:border-teal-500 focus:ring focus:ring-teal-200 focus:ring-opacity-50 transition-all duration-300">
+                            <option value="" disabled selected>اختر هدفك</option>
+                            <option value="weight_loss">فقدان الوزن</option>
+                            <option value="muscle_gain">بناء العضلات</option>
+                            <option value="fitness">تحسين اللياقة</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Exercise Frequency -->
+                    <div class="form-group">
+                        <label for="frequency" class="block text-gray-700 font-medium mb-2">عدد أيام التمرين بالأسبوع</label>
+                        <select id="frequency" name="frequency" required
+                            class="form-select w-full rounded-lg border-gray-300 focus:border-teal-500 focus:ring focus:ring-teal-200 focus:ring-opacity-50 transition-all duration-300">
+                            <option value="" disabled selected>اختر عدد الأيام</option>
+                            <option value="3">3 أيام بالأسبوع</option>
+                            <option value="4">4 أيام بالأسبوع</option>
+                            <option value="5">5+ أيام بالأسبوع</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Diet Preferences -->
+                    <div class="form-group">
+                        <label for="diet" class="block text-gray-700 font-medium mb-2">الخيارات الغذائية</label>
+                        <select id="diet" name="diet" required
+                            class="form-select w-full rounded-lg border-gray-300 focus:border-teal-500 focus:ring focus:ring-teal-200 focus:ring-opacity-50 transition-all duration-300">
+                            <option value="" disabled selected>اختر النظام الغذائي</option>
+                            <option value="standard">نظام غذائي عادي</option>
+                            <option value="high_protein">غني بالبروتين</option>
+                            <option value="vegetarian">نباتي</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Submit Button -->
+                <div class="text-center mt-8">
+                    <button type="submit" 
+                        class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50">
+                        إنشاء الخطة الشخصية
+                        <span class="ml-2">&#x1F4C3;</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Loading Overlay (Hidden by default) -->
+        <div id="loadingOverlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+            <div class="bg-white p-6 rounded-lg shadow-xl text-center">
+                <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-teal-600 border-opacity-75 mx-auto mb-4"></div>
+                <p class="text-lg font-medium text-gray-700">جاري إنشاء الخطة الشخصية الخاصة بك...</p>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="text-center text-gray-500 text-sm mt-12">
+            <p>© 2025 خطة اللياقة والتغذية الشخصية. جميع الحقوق محفوظة.</p>
+        </footer>
+    </div>
+    
+    <script src="js/formHandler.js"></script>
+    <script src="js/pdfGenerator.js"></script>
+    <script src="js/app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</body>
+</html>

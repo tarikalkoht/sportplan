@@ -1,0 +1,52 @@
+{
+    "name": "خطة اللياقة والتغذية الشخصية",
+    "short_name": "خطة اللياقة",
+    "description": "موقع لإنشاء خطة لياقة ونظام غذائي شخصي بناءً على معلومات المستخدم وتصديرها كملف PDF",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#f9fafb",
+    "theme_color": "#0d9488",
+    "orientation": "portrait-primary",
+    "dir": "rtl",
+    "lang": "ar",
+    "categories": ["fitness", "health", "lifestyle"],
+    "icons": [
+      {
+        "src": "images/icon-192x192.png",
+        "sizes": "192x192",
+        "type": "image/png",
+        "purpose": "any maskable"
+      },
+      {
+        "src": "images/icon-512x512.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "any maskable"
+      }
+    ],
+    "screenshots": [
+      {
+        "src": "images/screenshot-mobile.jpg",
+        "sizes": "540x720",
+        "type": "image/jpeg",
+        "platform": "narrow",
+        "label": "شاشة إدخال البيانات على الجوال"
+      },
+      {
+        "src": "images/screenshot-desktop.jpg",
+        "sizes": "1280x800",
+        "type": "image/jpeg",
+        "platform": "wide",
+        "label": "شاشة النتائج على الكمبيوتر"
+      }
+    ],
+    "related_applications": [],
+    "prefer_related_applications": false,
+    "shortcuts": [
+      {
+        "name": "إنشاء خطة جديدة",
+        "url": "/",
+        "description": "إنشاء خطة لياقة وتغذية جديدة"
+      }
+    ]
+  }
